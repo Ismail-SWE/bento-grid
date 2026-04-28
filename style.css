@@ -18,24 +18,21 @@ body {
 .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 1fr 1fr 0.7fr;
+    grid-template-rows: repeat(6, 1fr);
     gap: 1.5rem;
     max-width: 900px;
     width: 100%;
-    grid-template-areas:
-        "create  hero       hero        schedule"
-        "create  manage     consistent  schedule"
-        "ai      audience   grow        grow";
+    max-height: 800px;
 }
 
-.card-create     { grid-area: create; }
-.card-hero       { grid-area: hero; }
-.card-schedule   { grid-area: schedule; }
-.card-manage     { grid-area: manage; }
-.card-consistent { grid-area: consistent; }
-.card-ai         { grid-area: ai; }
-.card-audience   { grid-area: audience; }
-.card-grow       { grid-area: grow; }
+.card-create     { grid-column: 1;          grid-row: 1 / span 3; }
+.card-hero       { grid-column: 2 / span 2; grid-row: 1 / span 2; }
+.card-schedule   { grid-column: 4;          grid-row: 1 / span 4; }
+.card-manage     { grid-column: 2;          grid-row: 3 / span 2; }
+.card-consistent { grid-column: 3;          grid-row: 3 / span 2; }
+.card-ai         { grid-column: 1;          grid-row: 4 / span 3; }
+.card-audience   { grid-column: 2;          grid-row: 5 / span 2; }
+.card-grow       { grid-column: 3 / span 2; grid-row: 5 / span 2; }
 
 .card-create     { background-color: hsl(31, 66%, 93%); }
 .card-hero       { background-color: hsl(256, 67%, 59%); }
@@ -132,12 +129,12 @@ body {
 }
 
 .card-schedule img {
-    width: 100%;
-    height: auto;
+    width: 357px;
+    height: 318px;
 }
 
 .card-schedule__desc {
-    font-size: 1.125rem;
+    font-size: 0.8rem;
     line-height: 111%;
     letter-spacing: 0;
     font-weight: 400;
