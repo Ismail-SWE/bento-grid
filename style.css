@@ -29,6 +29,7 @@ body {
 .card-hero       { grid-column: 2 / span 2; grid-row: 1 / span 2; }
 .card-schedule   { grid-column: 4;          grid-row: 1 / span 4; }
 .card-manage     { grid-column: 2;          grid-row: 3 / span 2; }
+ 
 .card-consistent { grid-column: 3;          grid-row: 3 / span 2; }
 .card-ai         { grid-column: 1;          grid-row: 4 / span 3; }
 .card-audience   { grid-column: 2;          grid-row: 5 / span 2; }
@@ -122,7 +123,7 @@ body {
 
 .card-schedule__title {
     font-size: 1.75rem;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 0.875;
     letter-spacing: -2px;
     color: hsl(0, 0%, 7%);

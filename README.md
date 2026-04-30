@@ -12,6 +12,7 @@ This is my solution to the [Bento grid challenge on Frontend Mentor](https://www
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
   - [Continued development](#continued-development)
+  - [AI Collaboration](#ai-collaboration)
 - [Author](#author)
 
 ## Overview
@@ -28,7 +29,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Solution](https://github.com/Ismail-SWE/bento-grid)
+- Solution URL: [GitHub](https://github.com/Ismail-SWE/bento-grid)
 - Live Site URL: [Live Site](https://ismail-swe.github.io/bento-grid/)
 
 ## My process
@@ -36,31 +37,157 @@ Users should be able to:
 ### Built with
 
 - Semantic HTML5 markup
-- CSS custom properties
-- Flexbox
 - CSS Grid
-- Mobile-first workflow
+- Flexbox
+- CSS custom properties
+- Mobile-first responsive design
 
 ### What I learned
 
-This project was a great exercise in working with CSS Grid beyond the basics. Before starting, I was comfortable with simple grid layouts, but this challenge pushed me to think more carefully about how grid areas and grid lines actually work together.
+**1. grid-template-areas — naming grid zones**
 
-One thing that clicked for me was the difference between `grid-template-areas` and placing elements manually with `grid-column` / `grid-row`. I started with named areas because they felt more readable, but eventually switched to the line-based approach to get more precise control over how many rows each card spans. Using `grid-row: 1 / span 3` felt much more intentional than just naming zones.
+Starting with named areas felt the most readable way to visualize the layout:
 
-I also got a better feel for when `overflow: hidden` on a card is actually doing useful work — hiding the parts of images that intentionally bleed out of the card edges. Pairing that with negative margins like `margin-bottom: -1.5rem` to push an image past the card boundary was a small trick that made a big visual difference.
+```css
+.grid {
+    grid-template-areas:
+        "create  hero    hero     schedule"
+        "create  manage  consist  schedule"
+        "ai      audience  grow   grow";
+}
 
-Another thing I hadn't thought much about before was how `position: absolute` needs a `position: relative` parent to behave correctly. I ran into a bug where an image was escaping the card entirely and landing on top of other elements — the fix was simply adding `position: relative` to the card itself.
+.card-create   { grid-area: create; }
+.card-hero     { grid-area: hero; }
+```
 
-On the typography side, working directly from a Figma style guide helped me understand how design tokens translate into CSS. Matching `line-height: 0.935` or `letter-spacing: -3px` from a spec feels different from just eyeballing it, and I think my attention to those details improved a lot during this project.
+**2. Line-based placement — grid-column and grid-row**
+
+I later switched to line-based placement for more precise control over how many rows each card spans:
+
+```css
+.card-create   { grid-column: 1;          grid-row: 1 / span 3; }
+.card-hero     { grid-column: 2 / span 2; grid-row: 1 / span 2; }
+.card-schedule { grid-column: 4;          grid-row: 1 / span 4; }
+```
+
+**3. overflow: hidden — intentional image bleeding**
+
+Cards use `overflow: hidden` to clip images that bleed past the card edges. Negative margins push images outside the padding boundary:
+
+```css
+.card {
+    overflow: hidden;
+    padding: 1.5rem;
+}
+
+.card-consistent__img {
+    margin-bottom: -1.5rem; /* bleeds past bottom edge */
+    width: calc(100% + 3rem); /* stretches past side edges */
+    margin-left: -1.5rem;
+}
+```
+
+**4. position: absolute needs position: relative parent**
+
+When positioning an image absolutely inside a card, the card itself needs `position: relative` — otherwise the image escapes to the nearest positioned ancestor:
+
+```css
+.card-schedule {
+    position: relative; /* without this, image escapes the card */
+}
+
+.card-schedule img {
+    position: absolute;
+    bottom: 0;
+}
+```
+
+**5. CSS custom properties — reusable values**
+
+```css
+:root {
+    --purple-500: hsl(256, 67%, 59%);
+    --yellow-500: hsl(39, 100%, 71%);
+    --purple-100: hsl(254, 88%, 90%);
+    --yellow-100: hsl(31, 66%, 93%);
+}
+```
+
+**6. Figma style guide — design tokens to CSS**
+
+Working from a Figma style guide made typography much more precise. Instead of eyeballing values, I matched exact specs:
+
+```css
+.card-hero__title {
+    font-size: 2.5rem;
+    line-height: 0.935;
+    letter-spacing: -2px; /* directly from Figma */
+}
+```
+
+**7. grid-template-rows — controlling row heights**
+
+Without explicit row heights, rows expand to fit their content unevenly. Adding `repeat(6, 1fr)` made all rows equal height:
+
+```css
+.grid {
+    grid-template-rows: repeat(6, 1fr);
+    height: 850px;
+}
+```
+
+**8. Sketching grid layout before coding**
+
+Before writing any CSS, mapping out the grid visually — which card spans how many columns and rows — saved a lot of trial and error. The bento layout has 4 columns and 6 rows with cards spanning different areas.
+
+**9. flex-direction: row — horizontal card layout**
+
+The "Grow followers" card places the image and text side by side:
+
+```css
+.card-grow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.card-grow__img {
+    width: 50%;
+    flex-shrink: 0;
+}
+```
+
+**10. margin-top: auto — pushing content to the bottom**
+
+Inside a flex column, `margin-top: auto` on an image pushes it to the bottom of the card while keeping the title at the top:
+
+```css
+.card-create {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-create img {
+    margin-top: auto;
+}
+```
 
 ### Continued development
-
-I want to keep improving at:
 
 - Building fully responsive layouts without relying on fixed pixel heights
 - Getting more comfortable reading and implementing designs directly from Figma
 - Writing cleaner, more organized CSS — especially avoiding conflicts between general rules like `.card img` and specific overrides
+- Adding smooth CSS transitions and hover effects
+
+### AI Collaboration
+
+- **Tool:** Claude (Anthropic)
+- **How:** Used for learning CSS Grid concepts, debugging layout issues, analyzing Figma designs, and understanding how grid placement strategies differ
+- **What worked well:** Going step by step — reset, body, grid container, grid areas, then each card one by one — made the process much clearer than trying to write everything at once. Getting instant feedback on screenshots helped catch issues early
+- **What didn't:** Some sizing values still needed manual trial and error — AI cannot always predict the exact visual result without seeing the rendered output
 
 ## Author
 
 - Frontend Mentor - [@Ismail-SWE](https://www.frontendmentor.io/profile/Ismail-SWE)
+- GitHub - [@Ismail-SWE](https://github.com/Ismail-SWE)
