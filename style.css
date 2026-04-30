@@ -249,3 +249,79 @@ body {
     color: hsl(0, 0%, 100%);
     flex: 1;
 }
+
+/* ____________________________________________________________________________________________________________ */
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        max-height: none;
+
+        grid-template-areas:
+            "hero        hero"
+            "manage      consistent"
+            "schedule    schedule"
+            "grow        grow"
+            "audience    audience"
+            "create      ai";
+    }
+
+    .card-create     { grid-column: auto; grid-row: auto; }
+    .card-hero       { grid-column: auto; grid-row: auto; }
+    .card-schedule   { grid-column: auto; grid-row: auto; }
+    .card-manage     { grid-column: auto; grid-row: auto; }
+    .card-consistent { grid-column: auto; grid-row: auto; }
+    .card-ai         { grid-column: auto; grid-row: auto; }
+    .card-audience   { grid-column: auto; grid-row: auto; }
+    .card-grow       { grid-column: auto; grid-row: auto; }
+
+    .card-create     { grid-area: create; }
+    .card-hero       { grid-area: hero; }
+    .card-schedule   { grid-area: schedule; }
+    .card-manage     { grid-area: manage; }
+    .card-consistent { grid-area: consistent; }
+    .card-ai         { grid-area: ai; }
+    .card-audience   { grid-area: audience; }
+    .card-grow       { grid-area: grow; }
+
+    .card-schedule img {
+        width: 100%;
+        height: auto;
+    }
+
+    .card-grow {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .card-grow__img {
+        width: 60% !important;
+    }
+}
+
+/* ______________________________________________________________________________________________________________ */
+
+@media (max-width: 480px) {
+    .grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "hero"
+            "manage"
+            "consistent"
+            "schedule"
+            "grow"
+            "audience"
+            "create"
+            "ai";
+    }
+
+    .card-grow {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .card-grow__img {
+        width: 80% !important;
+    }
+}
