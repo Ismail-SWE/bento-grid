@@ -1,5 +1,9 @@
 # Frontend Mentor - Bento Grid Solution
 
+### Screenshot
+
+![](./screenshot.png)
+
 This is my solution to the [Bento grid challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/bento-grid-RMydElrlOj).
 
 ## Table of contents
@@ -23,9 +27,7 @@ Users should be able to:
 
 - View the optimal layout for the interface depending on their device's screen size
 
-### Screenshot
 
-![](./screenshot.png)
 
 ### Links
 
